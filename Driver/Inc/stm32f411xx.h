@@ -1,8 +1,8 @@
 /*
- *  Created on: Sep 6, 2023
- *  @file: stm32f411xx.h
+ *  Created on: Aug 21, 2023
+ *  @file: stm3203xx.h
  *  @brief: This is the MCU specific header file contain all the register info of the MCU
- *  @mcu: STM32F411CEU6
+ *  @mcu: STM32F103C8T6
  *  @author: Asraful Islam Taj
  */
 
@@ -28,10 +28,10 @@
 
 
 //ICER(Interrupt Clear-Enable Register
-#define NVIC_ICER0                    (uint32_t*)0XE000E180
-#define NVIC_ICER1                    (uint32_t*)0XE000E184
-#define NVIC_ICER2                    (uint32_t*)0XE000E188
-#define NVIC_ICER3                    (uint32_t*)0XE000E18C
+#define NVIC_ICER0                    (uint32_t*)0xE000E180
+#define NVIC_ICER1                    (uint32_t*)0xE000E184
+#define NVIC_ICER2                    (uint32_t*)0xE000E188
+#define NVIC_ICER3                    (uint32_t*)0xE000E18C
 
 
 
@@ -97,7 +97,15 @@ typedef struct{
 	__vo uint32_t AFR[2];
 }GPIO_RegDef_t;
 
+/*This is AFIO Register Struct
+typedef struct{
+	__vo uint32_t EVCR;
+	__vo uint32_t MAPR;
+	__vo uint32_t EXTICR[4];
+	__vo uint32_t MAPR2;
+}AFIO_RegDef_t;
 
+*/
 
 /*--------------------------------This Struct is For RCC-----------------------------*/
 typedef struct{
@@ -214,6 +222,21 @@ typedef struct{
 
 
 
+/*
+#define SPI1_PCLK_EN()               (RCC->APB2ENR |= (1 << 12))
+#define SPI2_PCLK_EN()               (RCC->APB1ENR |= (1 << 14))
+#define SPI3_PCLK_EN()               (RCC->APB1ENR |= (1 << 15))
+
+#define I2C1_PCLK_EN()               (RCC->APB1ENR |= (1 << 21))
+#define I2C2_PCLK_EN()               (RCC->APB1ENR |= (1 << 22))
+
+#define USART1_PCLK_EN()             (RCC->APB2ENR |= (1 << 14))
+#define USART2_PCLK_EN()             (RCC->APB1ENR |= (1 << 17))
+#define USART3_PCLK_EN()             (RCC->APB1ENR |= (1 << 18))
+#define UART4_PCLK_EN()              (RCC->APB1ENR |= (1 << 19))
+#define UART5_PCLK_EN()              (RCC->APB1ENR |= (1 << 20))
+*/
+
 
 /*---------------------------------------This Section is for Clock Disable Macros-----------------------------------*/
 
@@ -236,6 +259,21 @@ typedef struct{
 //SYSCFG Enable Macro
 #define SYSCFG_PCLK_DI()             (RCC->APB2ENR &= ~(1 << 14))
 
+/*
+#define SPI1_PCLK_DI()          (RCC->APB2ENR &= ~(1 << 12))
+#define SPI2_PCLK_DI()          (RCC->APB1ENR &= ~(1 << 14))
+#define SPI3_PCLK_DI()          (RCC->APB1ENR &= ~(1 << 15))
+
+#define I2C1_PCLK_DI()          (RCC->APB1ENR &= ~(1 << 21))
+#define I2C2_PCLK_DI()          (RCC->APB1ENR &= ~(1 << 22))
+
+#define USART1_PCLK_DI()        (RCC->APB2ENR &= ~(1 << 14))
+#define USART2_PCLK_DI()        (RCC->APB1ENR &= ~(1 << 17))
+#define USART3_PCLK_DI()        (RCC->APB1ENR &= ~(1 << 18))
+#define UART4_PCLK_DI()         (RCC->APB1ENR &= ~(1 << 19))
+#define UART5_PCLK_DI()         (RCC->APB1ENR &= ~(1 << 20))
+*/
+
 
 
 //IRQ(Interrupt Request) Number
@@ -254,7 +292,12 @@ typedef struct{
 		                          (x == GPIOB) ? 1 :\
 				                  (x == GPIOC) ? 2 :\
 						          (x == GPIOD) ? 3 :\
-								  (x == GPIOE) ? 4 :0)
+						          (x == GPIOE) ? 4 :\
+								  (x == GPIOE) ? 7 :0)
+
+
+#include "stm32f411xx_gpio.h"
+#include "stm32f411xx_spi.h"
 
 
 #endif /* STM32F411XX_H_ */

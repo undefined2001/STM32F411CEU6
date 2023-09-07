@@ -6,6 +6,7 @@
  *  @author: Asraful Islam Taj
  */
 
+
 #ifndef INC_STM32F411XX_GPIO_H_
 #define INC_STM32F411XX_GPIO_H_
 #include "stm32f411xx.h"
@@ -42,22 +43,22 @@
 #define DISABLE               0
 
 //GPIO Pin Numbers
-#define GPIO_Pin_0            0
-#define GPIO_Pin_1            1
-#define GPIO_Pin_2            2
-#define GPIO_Pin_3            3
-#define GPIO_Pin_4            4
-#define GPIO_Pin_5            5
-#define GPIO_Pin_6            6
-#define GPIO_Pin_7            7
-#define GPIO_Pin_8            8
-#define GPIO_Pin_9            9
-#define GPIO_Pin_10           10
-#define GPIO_Pin_11           11
-#define GPIO_Pin_12           12
-#define GPIO_Pin_13           13
-#define GPIO_Pin_14           14
-#define GPIO_Pin_15           15
+#define GPIO_Pin_0          0
+#define GPIO_Pin_1          1
+#define GPIO_Pin_2          2
+#define GPIO_Pin_3          3
+#define GPIO_Pin_4          4
+#define GPIO_Pin_5          5
+#define GPIO_Pin_6          6
+#define GPIO_Pin_7          7
+#define GPIO_Pin_8          8
+#define GPIO_Pin_9          9
+#define GPIO_Pin_10         10
+#define GPIO_Pin_11         11
+#define GPIO_Pin_12         12
+#define GPIO_Pin_13         13
+#define GPIO_Pin_14         14
+#define GPIO_Pin_15         15
 
 
 
@@ -85,8 +86,9 @@ void GPIO_Clock_Config(GPIO_RegDef_t *GPIOx, uint8_t ENorDI);
 uint32_t GPIO_Read_Pin(GPIO_RegDef_t *GPIOx, uint8_t GPIO_Pin);
 void GPIO_Write_Pin(GPIO_RegDef_t *GPIOx, uint8_t GPIO_Pin, uint8_t GPIO_Status);
 void GPIO_Toggle_Pin(GPIO_RegDef_t *GPIOx, uint8_t GPIO_Pin, uint32_t Delay);
-void IRQ_Config();
-void IRQ_Priority();
+void GPIO_IRQ_Config(uint8_t IRQNumber, uint8_t ENorDI);
+void GPIO_IRQ_Priority(uint8_t IRQNumber, uint8_t Priority);
+void GPIO_IRQ_Handling(uint8_t PinNumber);
 
 
 #endif /* INC_STM32F411XX_GPIO_H_ */
