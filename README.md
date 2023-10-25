@@ -7,10 +7,7 @@
 - [GPIO_Clock_Config](#gpio_clock_config)
 - [GPIO_Read_Pin](#gpio_read_pin)
 - [GPIO_Write_Pin](#gpio_write_pin)
-- [Usage](#usage)
-- [Examples](#examples)
-- [Contributing](#contributing)
-- [License](#license)
+
 
 ## Introduction
 
