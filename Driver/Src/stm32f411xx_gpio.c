@@ -9,14 +9,6 @@
 
 #include "Stm32f411xx_gpio.h"
 
-void GPIO_Delay(volatile uint32_t count)
-{
-    while (count)
-    {
-        count--;
-    }
-}
-
 void GPIO_Clock_Config(GPIO_RegDef_t *GPIOx, uint8_t ENorDI)
 {
     if (ENorDI == ENABLE)

@@ -81,7 +81,6 @@ typedef struct{
 
 
 void GPIO_Init(GPIO_Handle_t* GPIO_Config);
-void GPIO_Delay(volatile uint32_t count);
 void GPIO_Clock_Config(GPIO_RegDef_t *GPIOx, uint8_t ENorDI);
 uint32_t GPIO_Read_Pin(GPIO_RegDef_t *GPIOx, uint8_t GPIO_Pin);
 void GPIO_Write_Pin(GPIO_RegDef_t *GPIOx, uint8_t GPIO_Pin, uint8_t GPIO_Status);
