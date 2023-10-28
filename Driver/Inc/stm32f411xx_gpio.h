@@ -1,15 +1,14 @@
 /*
- *  Created on: Sep 6, 2023
- *  @file: stm32f411xx_gpio.h
- *  @brief: This header file contain all the things for (GPIO) General Purpose Input Output
- *  @mcu: STM32F411CEU6
- *  @author: Asraful Islam Taj
+ * stm32f411xx_gpio.h
+ *
+ *  Created on: 3 Sep 2023
+ *      Author: mdasr
  */
-
 
 #ifndef INC_STM32F411XX_GPIO_H_
 #define INC_STM32F411XX_GPIO_H_
 #include "stm32f411xx.h"
+#include "util.h"
 
 
 //GPIO Modes

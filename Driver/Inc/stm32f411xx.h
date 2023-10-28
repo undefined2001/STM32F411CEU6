@@ -9,7 +9,7 @@
 #ifndef STM32F411XX_H_
 #define STM32F411XX_H_
 #include<stdint.h>
-#define __vo volatile
+#define _IO volatile
 
 #define __BIT_LEFT_SHIFT(POSITION)        (1U << (POSITION))
 #define __BIT_RIGHT_SHIFT(POSITION)       ((POSITION) >> 1U)
@@ -23,10 +23,10 @@
 #define SYSTICK_BASEADDR              0xE000E010U
 
 typedef struct{
-	__vo uint32_t CSR;
-	__vo uint32_t RVR;
-	__vo uint32_t CVR;
-	__vo uint32_t CALIB;
+	_IO uint32_t CSR;
+	_IO uint32_t RVR;
+	_IO uint32_t CVR;
+	_IO uint32_t CALIB;
 }Systick_RegDef_t;
 
 #define SYSTICK                    ((Systick_RegDef_t*)SYSTICK_BASEADDR)
@@ -87,19 +87,19 @@ typedef struct{
 
 typedef struct
 {
-	__vo uint32_t ISER[8];
+	_IO uint32_t ISER[8];
 	     uint32_t PADDING_0[24];
-	__vo uint32_t ICER[8];
+	_IO uint32_t ICER[8];
 		 uint32_t PADDING_1[24];
-	__vo uint32_t ISPR[8];
+	_IO uint32_t ISPR[8];
 		 uint32_t PADDING_2[24];
-	__vo uint32_t ICPR[8];
+	_IO uint32_t ICPR[8];
 		 uint32_t PADDING_3[24];
-	__vo uint32_t IABR[8];
+	_IO uint32_t IABR[8];
 	     uint32_t PADDING_4[56];
-	__vo uint8_t IPR[240];
+	_IO uint8_t IPR[240];
 		 uint32_t RESERVED5[644];
-	__vo uint32_t STIR;
+	_IO uint32_t STIR;
 } NVIC_RegDef_t;
 
 
@@ -108,94 +108,94 @@ typedef struct
 
 /*--------------------------------This Struct is For GPIO-----------------------------*/
 typedef struct{
-	__vo uint32_t MODER;
-	__vo uint32_t OTYPER;
-	__vo uint32_t OSPEEDR;
-	__vo uint32_t PUPDR;
-	__vo uint32_t IDR;
-	__vo uint32_t ODR;
-	__vo uint32_t BSRR;
-	__vo uint32_t LCKR;
-	__vo uint32_t AFR[2];
+	_IO uint32_t MODER;
+	_IO uint32_t OTYPER;
+	_IO uint32_t OSPEEDR;
+	_IO uint32_t PUPDR;
+	_IO uint32_t IDR;
+	_IO uint32_t ODR;
+	_IO uint32_t BSRR;
+	_IO uint32_t LCKR;
+	_IO uint32_t AFR[2];
 }GPIO_RegDef_t;
 
 
 /*--------------------------------This Struct is For RCC-----------------------------*/
 typedef struct{
-	__vo uint32_t CR;
-	__vo uint32_t PLLCFGR;
-	__vo uint32_t CFGR;
-	__vo uint32_t CIR;
-	__vo uint32_t AHB1RSTR;
-	__vo uint32_t AHB2RSTR;
-	__vo uint32_t RESERVED_ONE[2];
-	__vo uint32_t APB1RSTR;
-	__vo uint32_t APB2RSTR;
-	__vo uint32_t RESERVED_TWO[2];
-	__vo uint32_t AHB1ENR;
-	__vo uint32_t AHB2ENR;
-	__vo uint32_t RESERVED_THREE[2];
-	__vo uint32_t APB1ENR;
-	__vo uint32_t APB2ENR;
-	__vo uint32_t RESERVED_FOUR[2];
-	__vo uint32_t AHB1LPENR;
-	__vo uint32_t AHB2LPENR;
-	__vo uint32_t RESERVED_FIVE[2];
-	__vo uint32_t APB1LPENR;
-	__vo uint32_t APB2LPENR;
-	__vo uint32_t RESERVED_SIX[2];
-	__vo uint32_t BDCR;
-	__vo uint32_t CSR;
-	__vo uint32_t RESERVED_SEVEN[2];
-	__vo uint32_t SSCGR;
-	__vo uint32_t PLLI2SCFGR;
-	__vo uint32_t RESERVED_EIGHT;
-	__vo uint32_t DCKCFGR;
+	_IO uint32_t CR;
+	_IO uint32_t PLLCFGR;
+	_IO uint32_t CFGR;
+	_IO uint32_t CIR;
+	_IO uint32_t AHB1RSTR;
+	_IO uint32_t AHB2RSTR;
+	_IO uint32_t RESERVED_ONE[2];
+	_IO uint32_t APB1RSTR;
+	_IO uint32_t APB2RSTR;
+	_IO uint32_t RESERVED_TWO[2];
+	_IO uint32_t AHB1ENR;
+	_IO uint32_t AHB2ENR;
+	_IO uint32_t RESERVED_THREE[2];
+	_IO uint32_t APB1ENR;
+	_IO uint32_t APB2ENR;
+	_IO uint32_t RESERVED_FOUR[2];
+	_IO uint32_t AHB1LPENR;
+	_IO uint32_t AHB2LPENR;
+	_IO uint32_t RESERVED_FIVE[2];
+	_IO uint32_t APB1LPENR;
+	_IO uint32_t APB2LPENR;
+	_IO uint32_t RESERVED_SIX[2];
+	_IO uint32_t BDCR;
+	_IO uint32_t CSR;
+	_IO uint32_t RESERVED_SEVEN[2];
+	_IO uint32_t SSCGR;
+	_IO uint32_t PLLI2SCFGR;
+	_IO uint32_t RESERVED_EIGHT;
+	_IO uint32_t DCKCFGR;
 }RCC_RegDef_t;
 
 
 
 /*--------------------------------This Struct is For EXTI-----------------------------*/
 typedef struct{
-	__vo uint32_t IMR;
-	__vo uint32_t EMR;
-	__vo uint32_t RTSR;
-	__vo uint32_t FTSR;
-	__vo uint32_t SWIER;
-	__vo uint32_t PR;
+	_IO uint32_t IMR;
+	_IO uint32_t EMR;
+	_IO uint32_t RTSR;
+	_IO uint32_t FTSR;
+	_IO uint32_t SWIER;
+	_IO uint32_t PR;
 }EXTI_RegDef_t;
 
 /*--------------------------------This Struct is For SYSCFG-----------------------------*/
 typedef struct{
-	__vo uint32_t MEMRMP;
-	__vo uint32_t PMC;
-	__vo uint32_t EXTICR[4];
-	__vo uint32_t CMPCR;
+	_IO uint32_t MEMRMP;
+	_IO uint32_t PMC;
+	_IO uint32_t EXTICR[4];
+	_IO uint32_t CMPCR;
 }SYSCFG_RegDef_t;
 
 
 /*--------------------------------This Struct is For SPI-----------------------------*/
 typedef struct{
-	__vo uint32_t CR1;
-	__vo uint32_t SR;
-	__vo uint32_t DR;
-	__vo uint32_t CRCPR;
-	__vo uint32_t RXCRCR;
-	__vo uint32_t TXCRCR;
-	__vo uint32_t I2SCFGR;
-	__vo uint32_t I2SPR;
+	_IO uint32_t CR1;
+	_IO uint32_t SR;
+	_IO uint32_t DR;
+	_IO uint32_t CRCPR;
+	_IO uint32_t RXCRCR;
+	_IO uint32_t TXCRCR;
+	_IO uint32_t I2SCFGR;
+	_IO uint32_t I2SPR;
 
 }SPI_RegDef_t;
 
 /*--------------------------------This Struct is For USART-----------------------------*/
 typedef struct{
-	__vo uint32_t SR;
-	__vo uint32_t DR;
-	__vo uint32_t BRR;
-	__vo uint32_t CR1;
-	__vo uint32_t CR2;
-	__vo uint32_t CR3;
-	__vo uint32_t GTPR;
+	_IO uint32_t SR;
+	_IO uint32_t DR;
+	_IO uint32_t BRR;
+	_IO uint32_t CR1;
+	_IO uint32_t CR2;
+	_IO uint32_t CR3;
+	_IO uint32_t GTPR;
 }USART_RegDef_t;
 
 
