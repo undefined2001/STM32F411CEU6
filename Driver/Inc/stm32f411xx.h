@@ -1,37 +1,41 @@
-/*
+/**
  *  Created on: Aug 21, 2023
  *  @file: stm3203xx.h
  *  @brief: This is the MCU specific header file contain all the register info of the MCU
  *  @mcu: STM32F103C8T6
  *  @author: Asraful Islam Taj
- */
+ **/
 
 #ifndef STM32F411XX_H_
 #define STM32F411XX_H_
 #include<stdint.h>
 #define __vo volatile
 
+#define __BIT_LEFT_SHIFT(POSITION)        (1U << (POSITION))
+#define __BIT_RIGHT_SHIFT(POSITION)       ((POSITION) >> 1U)
+#define __LEFT_SHIFT(VALUE, POSITION)     (((VALUE) << (POSITION)))
+#define __RIGHT_SHIFT(VALUE, POSITION)    (((VALUE) >> (POSITION)))
 
-//Architecture Related Things
+/*********************** Here Goes Cortex-M4 Provided address ******************************/
+#define SYSCLK_FREQ  16000000U
+
+/*---------------------------Systick-------------------*/
+#define SYSTICK_BASEADDR              0xE000E010U
+
+typedef struct{
+	__vo uint32_t CSR;
+	__vo uint32_t RVR;
+	__vo uint32_t CVR;
+	__vo uint32_t CALIB;
+}Systick_RegDef_t;
+
+#define SYSTICK                    ((Systick_RegDef_t*)SYSTICK_BASEADDR)
 
 //Here goes NVIC Related Register
 
 #define NO_PR_BITS_IMPLEMENTED        4
 
-#define NVIC_PR_BASE_ADDR             (uint32_t*)0xE000E400
-
-//ISER(Interrupt Set-Enable Register)
-#define NVIC_ISER0                    (uint32_t*)0xE000E100
-#define NVIC_ISER1                    (uint32_t*)0xE000E104
-#define NVIC_ISER2                    (uint32_t*)0xE000E108
-#define NVIC_ISER3                    (uint32_t*)0xE000E10C
-
-
-//ICER(Interrupt Clear-Enable Register
-#define NVIC_ICER0                    (uint32_t*)0xE000E180
-#define NVIC_ICER1                    (uint32_t*)0xE000E184
-#define NVIC_ICER2                    (uint32_t*)0xE000E188
-#define NVIC_ICER3                    (uint32_t*)0xE000E18C
+#define NVIC_BASEADDR                 0xE000E100U
 
 
 
@@ -75,13 +79,31 @@
 #define SPI4_BASEADDR                (APB2PERIPH_BASEADDR + 0x3400)
 
 
+#define USART1_BASEADDR              (APB2PERIPH_BASEADDR + 0x1000)
 #define USART2_BASEADDR              (APB1PERIPH_BASEADDR + 0x4400)
-#define USART3_BASEADDR              (APB1PERIPH_BASEADDR + 0x4800)
-#define UART4_BASEADDR               (APB1PERIPH_BASEADDR + 0x4C00)
-#define UART5_BASEADDR               (APB1PERIPH_BASEADDR + 0x5000)
+#define USART6_BASEADDR              (APB2PERIPH_BASEADDR + 0x1400)
+
+/***************************** This Section is For ARM Core Peripheral Structures *******************************/
+
+typedef struct
+{
+	__vo uint32_t ISER[8];
+	     uint32_t PADDING_0[24];
+	__vo uint32_t ICER[8];
+		 uint32_t PADDING_1[24];
+	__vo uint32_t ISPR[8];
+		 uint32_t PADDING_2[24];
+	__vo uint32_t ICPR[8];
+		 uint32_t PADDING_3[24];
+	__vo uint32_t IABR[8];
+	     uint32_t PADDING_4[56];
+	__vo uint8_t IPR[240];
+		 uint32_t RESERVED5[644];
+	__vo uint32_t STIR;
+} NVIC_RegDef_t;
 
 
-
+/***************************** This Section is For Peripheral Structures *******************************/
 
 
 /*--------------------------------This Struct is For GPIO-----------------------------*/
@@ -97,15 +119,6 @@ typedef struct{
 	__vo uint32_t AFR[2];
 }GPIO_RegDef_t;
 
-/*This is AFIO Register Struct
-typedef struct{
-	__vo uint32_t EVCR;
-	__vo uint32_t MAPR;
-	__vo uint32_t EXTICR[4];
-	__vo uint32_t MAPR2;
-}AFIO_RegDef_t;
-
-*/
 
 /*--------------------------------This Struct is For RCC-----------------------------*/
 typedef struct{
@@ -174,6 +187,23 @@ typedef struct{
 
 }SPI_RegDef_t;
 
+/*--------------------------------This Struct is For USART-----------------------------*/
+typedef struct{
+	__vo uint32_t SR;
+	__vo uint32_t DR;
+	__vo uint32_t BRR;
+	__vo uint32_t CR1;
+	__vo uint32_t CR2;
+	__vo uint32_t CR3;
+	__vo uint32_t GTPR;
+}USART_RegDef_t;
+
+
+/***************************** End of Peripheral Structures *******************************/
+
+//NVIC Definition
+#define NVIC                         ((NVIC_RegDef_t *)NVIC_BASEADDR)
+
 
 //GPIO Peripherals Definition
 #define GPIOA                        ((GPIO_RegDef_t *)GPIOA_BASEADDR)
@@ -189,6 +219,13 @@ typedef struct{
 #define SPI3                         ((SPI_RegDef_t*)SPI3_BASEADDR)
 #define SPI4                         ((SPI_RegDef_t*)SPI4_BASEADDR)
 
+//USART Definition Macros
+
+#define USART1                       ((USART_RegDef_t*)USART1_BASEADDR)
+#define USART2                       ((USART_RegDef_t*)USART2_BASEADDR)
+#define USART6                       ((USART_RegDef_t*)USART6_BASEADDR)
+
+
 //RCC Peripherals Definition
 #define RCC                          ((RCC_RegDef_t *)RCC_BASEADDR)
 
@@ -203,46 +240,42 @@ typedef struct{
 /*---------------------------------------This Section is for Clock Enable Macros-----------------------------------*/
 
 // GPIO Clock Enable Macros
-#define GPIOA_PCLK_EN()              (RCC->AHB1ENR |= (1 << 0))
-#define GPIOB_PCLK_EN()              (RCC->AHB1ENR |= (1 << 1))
-#define GPIOC_PCLK_EN()              (RCC->AHB1ENR |= (1 << 2))
-#define GPIOD_PCLK_EN()              (RCC->AHB1ENR |= (1 << 3))
-#define GPIOE_PCLK_EN()              (RCC->AHB1ENR |= (1 << 4))
-#define GPIOH_PCLK_EN()              (RCC->AHB1ENR |= (1 << 7))
+#define GPIOA_PCLK_EN()              (RCC->AHB1ENR |= __BIT_LEFT_SHIFT(0))
+#define GPIOB_PCLK_EN()              (RCC->AHB1ENR |= __BIT_LEFT_SHIFT(1))
+#define GPIOC_PCLK_EN()              (RCC->AHB1ENR |= __BIT_LEFT_SHIFT(2))
+#define GPIOD_PCLK_EN()              (RCC->AHB1ENR |= __BIT_LEFT_SHIFT(3))
+#define GPIOE_PCLK_EN()              (RCC->AHB1ENR |= __BIT_LEFT_SHIFT(4))
+#define GPIOH_PCLK_EN()              (RCC->AHB1ENR |= __BIT_LEFT_SHIFT(7))
 
 //SYSCFG Enable Macro
-#define SYSCFG_PCLK_EN()             (RCC->APB2ENR |= (1 << 14))
+#define SYSCFG_PCLK_EN()             (RCC->APB2ENR |= (__BIT_LEFT_SHIFT(14)))
 
 
 //SPI Clock Enable Macros
-#define SPI1_PCLK_EN()               (RCC->APB2ENR |= (1 << 12))
-#define SPI2_PCLK_EN()               (RCC->APB1ENR |= (1 << 14))
-#define SPI3_PCLK_EN()               (RCC->APB1ENR |= (1 << 15))
-#define SPI4_PCLK_EN()               (RCC->APB2ENR |= (1 << 13))
+#define SPI1_PCLK_EN()               (RCC->APB2ENR |= (__BIT_LEFT_SHIFT(12)))
+#define SPI2_PCLK_EN()               (RCC->APB1ENR |= (__BIT_LEFT_SHIFT(14)))
+#define SPI3_PCLK_EN()               (RCC->APB1ENR |= (__BIT_LEFT_SHIFT(15)))
+#define SPI4_PCLK_EN()               (RCC->APB2ENR |= (__BIT_LEFT_SHIFT(16)))
 
 
+//I2C Clock Enable Macros
+#define I2C1_PCLK_EN()               (RCC->APB1ENR |= (__BIT_LEFT_SHIFT(21)))
+#define I2C2_PCLK_EN()               (RCC->APB1ENR |= (__BIT_LEFT_SHIFT(22)))
 
-/*
-#define SPI1_PCLK_EN()               (RCC->APB2ENR |= (1 << 12))
-#define SPI2_PCLK_EN()               (RCC->APB1ENR |= (1 << 14))
-#define SPI3_PCLK_EN()               (RCC->APB1ENR |= (1 << 15))
 
-#define I2C1_PCLK_EN()               (RCC->APB1ENR |= (1 << 21))
-#define I2C2_PCLK_EN()               (RCC->APB1ENR |= (1 << 22))
+//UART and USART Clock Enable Macros
+#define USART1_PCLK_EN()             (RCC->APB2ENR |= (__BIT_LEFT_SHIFT(4)))
+#define USART2_PCLK_EN()             (RCC->APB1ENR |= (__BIT_LEFT_SHIFT(17)))
+#define USART6_PCLK_EN()             (RCC->APB2ENR |= (__BIT_LEFT_SHIFT(5)))
 
-#define USART1_PCLK_EN()             (RCC->APB2ENR |= (1 << 14))
-#define USART2_PCLK_EN()             (RCC->APB1ENR |= (1 << 17))
-#define USART3_PCLK_EN()             (RCC->APB1ENR |= (1 << 18))
-#define UART4_PCLK_EN()              (RCC->APB1ENR |= (1 << 19))
-#define UART5_PCLK_EN()              (RCC->APB1ENR |= (1 << 20))
-*/
+
 
 
 /*---------------------------------------This Section is for Clock Disable Macros-----------------------------------*/
 
 //GPIO Clock Disable Macros
-#define GPIOA_PCLK_DI()              (RCC->AHB1ENR &= ~(1 << 0))
-#define GPIOB_PCLK_DI()              (RCC->AHB1ENR &= ~(1 << 1))
+#define GPIOA_PCLK_DI()              (RCC->AHB1ENR &= ~__BIT_LEFT_SHIFT(0))
+#define GPIOB_PCLK_DI()              (RCC->AHB1ENR &= ~__BIT_LEFT_SHIFT(1))
 #define GPIOC_PCLK_DI()              (RCC->AHB1ENR &= ~(1 << 2))
 #define GPIOD_PCLK_DI()              (RCC->AHB1ENR &= ~(1 << 3))
 #define GPIOE_PCLK_DI()              (RCC->AHB1ENR &= ~(1 << 4))
@@ -259,20 +292,16 @@ typedef struct{
 //SYSCFG Enable Macro
 #define SYSCFG_PCLK_DI()             (RCC->APB2ENR &= ~(1 << 14))
 
-/*
-#define SPI1_PCLK_DI()          (RCC->APB2ENR &= ~(1 << 12))
-#define SPI2_PCLK_DI()          (RCC->APB1ENR &= ~(1 << 14))
-#define SPI3_PCLK_DI()          (RCC->APB1ENR &= ~(1 << 15))
 
+//I2C Clock Disable Macros
 #define I2C1_PCLK_DI()          (RCC->APB1ENR &= ~(1 << 21))
 #define I2C2_PCLK_DI()          (RCC->APB1ENR &= ~(1 << 22))
 
-#define USART1_PCLK_DI()        (RCC->APB2ENR &= ~(1 << 14))
-#define USART2_PCLK_DI()        (RCC->APB1ENR &= ~(1 << 17))
-#define USART3_PCLK_DI()        (RCC->APB1ENR &= ~(1 << 18))
-#define UART4_PCLK_DI()         (RCC->APB1ENR &= ~(1 << 19))
-#define UART5_PCLK_DI()         (RCC->APB1ENR &= ~(1 << 20))
-*/
+
+//UART and USART Clock Disable Macros
+#define USART1_PCLK_DI()             (RCC->APB2ENR &= ~(1 << 4))
+#define USART2_PCLK_DI()             (RCC->APB1ENR &= ~(1 << 17))
+#define USART6_PCLK_DI()             (RCC->APB2ENR &= ~(1 << 5))
 
 
 
@@ -295,9 +324,6 @@ typedef struct{
 						          (x == GPIOE) ? 4 :\
 								  (x == GPIOE) ? 7 :0)
 
-
 #include "stm32f411xx_gpio.h"
-#include "stm32f411xx_spi.h"
-
 
 #endif /* STM32F411XX_H_ */
