@@ -1,0 +1,31 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${default}",
+                "/home/asraful/STM32/STM32F411CEU6/Core/Inc",
+                "/home/asraful/STM32/STM32F411CEU6/Driver/Inc",
+                "/usr/arm-none-eabi/include",
+                "/usr/arm-none-eabi/include/c++/13.2.0",
+                "/lib/gcc/arm-none-eabi/13.2.0/include",
+                "/lib/gcc/arm-none-eabi/13.2.0/include-fixed",
+                "/usr/arm-none-eabi/include/machine",
+                "/usr/arm-none-eabi/include/newlib-nano",
+                "/usr/arm-none-eabi/include/sys" 
+            ],
+            "defines": [
+                "STM32F411xE",
+                "_DEBUG",
+                "__CC_ARM",
+                "UNICODE",
+                "_UNICODE",
+                "USE_HAL_DRIVER"
+            ],
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-arm"
+        }
+    ],
+    "version": 4
+}

@@ -23,3 +23,8 @@ void Delay_ms(uint16_t delay_ms)
 	SYSTICK->CSR = 0;
 
 }
+
+int add(int a, int b)
+{
+	return a + b;
+}

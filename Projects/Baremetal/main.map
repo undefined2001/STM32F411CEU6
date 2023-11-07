@@ -1,0 +1,156 @@
+
+There are no discarded input sections
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x08000000         0x00080000         xr
+SRAM             0x20000000         0x00020000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD stm32f411_startup.o
+LOAD test.o
+
+.text           0x08000000      0x34c
+ *(.vector)
+ .vector        0x08000000      0x11c stm32f411_startup.o
+                0x08000000                vector
+ *(.text)
+ .text          0x0800011c       0x90 stm32f411_startup.o
+                0x0800011c                Reset_Handler
+                0x080001a4                RTC_WKUP_Handler
+                0x080001a4                FLASH_Handler
+                0x080001a4                SVCall_Handler
+                0x080001a4                DMA2_Stream7_Handler
+                0x080001a4                Systick_Handler
+                0x080001a4                HardFault_Handler
+                0x080001a4                DMA2_Stream3_Handler
+                0x080001a4                PendSV_Handler
+                0x080001a4                NMI_Handler
+                0x080001a4                EXTI15_10_Handler
+                0x080001a4                ADC_Handler
+                0x080001a4                I2C1_EV_Handler
+                0x080001a4                TAMP_STAMP_Handler
+                0x080001a4                I2C3_ER_Handler
+                0x080001a4                WWDG_Handler
+                0x080001a4                EXTI4_Handler
+                0x080001a4                I2C3_EV_Handler
+                0x080001a4                DMA1_Stream1_Handler
+                0x080001a4                DMA2_Stream4_Handler
+                0x080001a4                DMA1_Stream7_Handler
+                0x080001a4                OTG_FS_Handler
+                0x080001a4                TIM1_BRK_TIM9_Handler
+                0x080001a4                I2C1_ER_Handler
+                0x080001a4                DMA1_Stream3_Handler
+                0x080001a4                UsageFault_Handler
+                0x080001a4                TIM1_UP_TIM10_Handler
+                0x080001a4                TIM1_CC_Handler
+                0x080001a4                I2C2_ER_Handler
+                0x080001a4                USART6_Handler
+                0x080001a4                DMA1_Stream0_Handler
+                0x080001a4                EXTI1_Handler
+                0x080001a4                EXTI3_Handler
+                0x080001a4                EXTI2_Handler
+                0x080001a4                EXTI9_5_Handler
+                0x080001a4                TIM2_Handler
+                0x080001a4                USART1_Handler
+                0x080001a4                DMA2_Stream6_Handler
+                0x080001a4                Default_Handler
+                0x080001a4                TIM1_TRG_COM_TIM11_Handler
+                0x080001a4                RTC_Alarm_Handler
+                0x080001a4                TIM4_Handler
+                0x080001a4                SPI2_Handler
+                0x080001a4                DMA2_Stream1_Handler
+                0x080001a4                DMA1_Stream2_Handler
+                0x080001a4                MemManage_Handler
+                0x080001a4                EXTI0_Handler
+                0x080001a4                DMA2_Stream5_Handler
+                0x080001a4                DMA1_Stream6_Handler
+                0x080001a4                SDIO_Handler
+                0x080001a4                USART2_Handler
+                0x080001a4                SPI1_Handler
+                0x080001a4                I2C2_EV_Handler
+                0x080001a4                DMA2_Stream2_Handler
+                0x080001a4                SPI3_Handler
+                0x080001a4                DMA2_Stream0_Handler
+                0x080001a4                RCC_Handler
+                0x080001a4                PVD_Handler
+                0x080001a4                DMA1_Stream5_Handler
+                0x080001a4                TIM5_Handler
+                0x080001a4                FPU_Handler
+                0x080001a4                BusFault_Handler
+                0x080001a4                SPI5_Handler
+                0x080001a4                DMA1_Stream4_Handler
+                0x080001a4                DebugMonitor_Handler
+                0x080001a4                OTG_FS_WKUP_Handler
+                0x080001a4                SPI4_Handler
+ .text          0x080001ac      0x1a0 test.o
+                0x08000230                timer3_init
+                0x08000280                main
+                0x080002dc                TIM3_Handler
+                0x080002f8                delay
+ *(.init)
+ *(.fini)
+ *(.rodata)
+ *(.rodata.*)
+                0x0800034c                        . = ALIGN (0x4)
+                0x0800034c                        __END_OF_TEXT = .
+                0x0800034c                        __START_FLASH_DATA = LOADADDR (.data)
+
+.glue_7         0x0800034c        0x0
+ .glue_7        0x0800034c        0x0 linker stubs
+
+.glue_7t        0x0800034c        0x0
+ .glue_7t       0x0800034c        0x0 linker stubs
+
+.vfp11_veneer   0x0800034c        0x0
+ .vfp11_veneer  0x0800034c        0x0 linker stubs
+
+.v4_bx          0x0800034c        0x0
+ .v4_bx         0x0800034c        0x0 linker stubs
+
+.iplt           0x0800034c        0x0
+ .iplt          0x0800034c        0x0 stm32f411_startup.o
+
+.rel.dyn        0x0800034c        0x0
+ .rel.iplt      0x0800034c        0x0 stm32f411_startup.o
+
+.data           0x20000000        0x0 load address 0x0800034c
+                0x20000000                        __START_SRAM_DATA = .
+ *(.data)
+ .data          0x20000000        0x0 stm32f411_startup.o
+ .data          0x20000000        0x0 test.o
+ *(.data.*)
+                0x20000000                        . = ALIGN (0x4)
+                0x20000000                        __END_SRAM_DATA = .
+
+.igot.plt       0x20000000        0x0 load address 0x0800034c
+ .igot.plt      0x20000000        0x0 stm32f411_startup.o
+
+.bss            0x20000000        0x0 load address 0x0800034c
+                0x20000000                        _sbss = .
+                0x20000000                        __START_BSS = _sbss
+ *(.bss)
+ .bss           0x20000000        0x0 stm32f411_startup.o
+ .bss           0x20000000        0x0 test.o
+ *(.bss.*)
+ *(COMMON)
+                0x20000000                        . = ALIGN (0x4)
+                0x20000000                        _ebss = .
+                0x20000000                        __END_BSS = _ebss
+OUTPUT(main.elf elf32-littlearm)
+LOAD linker stubs
+
+.comment        0x00000000       0x1e
+ .comment       0x00000000       0x1e stm32f411_startup.o
+                                 0x1f (size before relaxing)
+ .comment       0x0000001e       0x1f test.o
+
+.ARM.attributes
+                0x00000000       0x2e
+ .ARM.attributes
+                0x00000000       0x2e stm32f411_startup.o
+ .ARM.attributes
+                0x0000002e       0x2e test.o

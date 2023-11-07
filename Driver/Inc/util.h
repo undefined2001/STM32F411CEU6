@@ -14,5 +14,7 @@
 
 void Delay_ms(uint16_t ms);
 
+int add(int a, int b);
+
 
 #endif /* UTIL_H_ */
